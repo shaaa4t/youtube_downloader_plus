@@ -7,7 +7,7 @@ import 'package:youtube_downloader_plus/youtube_downloader_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await YoutubeDownloaderTotalxsoftware.initialize(
+  await YoutubeDownloaderPlus.initialize(
     androidNotificationIcon: 'resource://drawable/ic_launcher',
   );
   runApp(const MyApp());
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    YoutubeDownloaderTotalxsoftware().downloadYoutubeVideo(
+    YoutubeDownloaderPlus().downloadYoutubeVideo(
       context: context,
       ytUrl: youtubeUrl,
       error: (e) => log('Error: $e'),
