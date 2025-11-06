@@ -1,0 +1,46 @@
+name: youtube_downloader_plus
+description: "A Flutter package developed by TotalXSoftware for downloading YouTube videos with customizable quality options and progress notifications."
+version: 1.0.0
+homepage: "https://github.com/totalxsoftwaredevelopers/youtube_downloader_totalxsoftware"
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  video_url_validator: ^1.0.4
+  youtube_explode_dart: ^2.5.3
+  ffmpeg_kit_flutter_new: ^4.1.0
+  path_provider: ^2.1.5
+  awesome_notifications: ^0.10.1
+  permission_handler: ^12.0.1
+  flutter_foreground_task: ^9.1.0
+  http: ^1.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+
+flutter:
+  generate: true
+
+screenshots:
+  - description: "www.totalx.in"
+    path: assets/images/totalx.png
+  - description: "https://www.youtube.com/"
+    path: assets/images/youtube.png
+
+    #   platforms:
+    # android:
+    #   package: com.totalxsoftware.razorpay_totalxsoftware
+    #   pluginClass: RazorpayTotalxsoftwarePlugin
+    # ios:
+    #   pluginClass: RazorpayTotalxsoftwarePlugin
