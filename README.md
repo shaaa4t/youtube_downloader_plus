@@ -1,4 +1,5 @@
-# Youtube Downloader Totalxsoftware Plus - Flutter Plugin
+
+# Youtube Downloader Plus - Flutter Plugin
 
 `youtube_downloader_plus` is a **modified version** of the original [youtube_downloader_totalxsoftware](https://pub.dev/packages/youtube_downloader_totalxsoftware) Flutter package.  
 It adds **Arabic localization (`localeCode`)**, enhanced notifications, and custom download progress handling.
@@ -22,14 +23,15 @@ Add the dependency in your `pubspec.yaml`:
 ```yaml
 dependencies:
   youtube_downloader_plus: ^1.0.0
-```
+````
 
 Then run:
 
 ```bash
 flutter pub get
-
 ```
+
+---
 
 ## Usage
 
@@ -38,53 +40,54 @@ flutter pub get
 Call the `initialize` method to set up notifications (required for Android):
 
 ```dart
-
-await YoutubeDownloaderTotalxsoftware.initialize(
+await YoutubeDownloaderPlus.initialize(
   androidNotificationIcon: 'resource://drawable/notification_icon',
 );
-
 ```
 
 #### Place the Icon in Drawable Folders
 
 Save your notification icon in the following `res/drawable` directories based on screen density:
 
-- `res/drawable-mdpi`: For medium-density screens (1x).
-- `res/drawable-hdpi`: For high-density screens (1.5x).
-- `res/drawable-xhdpi`: For extra-high-density screens (2x).
-- `res/drawable-xxhdpi`: For extra-extra-high-density screens (3x).
-- `res/drawable-xxxhdpi`: For extra-extra-extra-high-density screens (4x).
+* `res/drawable-mdpi`: For medium-density screens (1x).
+* `res/drawable-hdpi`: For high-density screens (1.5x).
+* `res/drawable-xhdpi`: For extra-high-density screens (2x).
+* `res/drawable-xxhdpi`: For extra-extra-high-density screens (3x).
+* `res/drawable-xxxhdpi`: For extra-extra-extra-high-density screens (4x).
 
-Make sure the icon file is named consistently across all folders, for example: `notification_icon.png.`
+Make sure the icon file is named consistently across all folders, for example: `notification_icon.png`.
 
 ---
 
 ## Download a YouTube Video
 
 ```dart
- YoutubeDownloaderTotalxsoftware().downloadYoutubeVideo(
-      context: context,
-      ytUrl: 'https://youtube.com/shorts/G-2INFh7hpk?si=VWfSRsTYMzX69vpK',
-      error: (e) => log('Error: $e'),
-      onProgress: (progress) {
-        this.progress = progress;
-        setState(() {});
-      },
-      onComplete: (file,thumbnail) {
-        log('Download complete: ${file.path}');
-        log('Download complete thumbnail: ${thumbnail.path}');
-
-      },
-      onLoading: (isLoading) {
-        // Loading
-
-      },
-      qualityBuilderSheet: qualityBuilderSheet,
-    );
+YoutubeDownloaderPlus().downloadYoutubeVideo(
+  context: context,
+  ytUrl: 'https://youtube.com/shorts/G-2INFh7hpk?si=VWfSRsTYMzX69vpK',
+  error: (e) => log('Error: $e'),
+  onProgress: (progress) {
+    this.progress = progress;
+    setState(() {});
+  },
+  onComplete: (file, thumbnail) {
+    log('Download complete: ${file.path}');
+    log('Thumbnail downloaded: ${thumbnail.path}');
+  },
+  onLoading: (isLoading) {
+    // Handle loading state
+  },
+  qualityBuilderSheet: qualityBuilderSheet,
+  localeCode: 'ar', // Arabic localization example
+);
 ```
+
+---
+
 ## Example: Bottom Sheet Implementation
 
 Customize your video quality selection UI:
+
 ```dart
 Widget qualityBuilderSheet(videos, onSelected) {
   return Container(
@@ -143,22 +146,24 @@ Widget qualityBuilderSheet(videos, onSelected) {
     ),
   );
 }
-
 ```
 
 ---
 
 ## Platform Requirements
-### Android
-- Add the following permissions to your `AndroidManifest.xml`:
 
-```xml 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+### Android
+
+Add the following permissions to your `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
 
-## iOS
+### iOS
 
 Ensure your `Info.plist` includes the required keys for network and storage access.
+
