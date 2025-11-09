@@ -24,6 +24,18 @@ class AppStrings {
       'no_available_video_streams': 'لا توجد تدفقات فيديو متاحة',
       'error': 'خطأ:',
     },
+    'merging': {
+      'en': 'Merging video...',
+      'ar': 'دمج الفيديو...',
+    },
+    'download_complete': {
+      'en': 'Download Complete',
+      'ar': 'اكتمل التنزيل',
+    },
+    'video_ready': {
+      'en': 'Your video is ready!',
+      'ar': 'الفيديو جاهز!',
+    },
   };
 
   static String get(String key, {required String localeCode}) =>

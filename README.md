@@ -22,7 +22,7 @@ Add the dependency in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  youtube_downloader_plus: ^1.0.0
+  youtube_downloader_plus: ^1.0.2
 ````
 
 Then run:

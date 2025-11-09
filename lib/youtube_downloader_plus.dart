@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -29,18 +30,41 @@ class YoutubeDownloaderPlus {
   static bool _isDownloading = false;
 
   // Initialize notifications and permissions
+  // static Future<void> initialize({
+  //   required String androidNotificationIcon,
+  // }) async {
+  //   if (Platform.isAndroid) {
+  //     PermissionStatus notificationPermissionStatus =
+  //         await Permission.notification.status;
+  //     if (!notificationPermissionStatus.isGranted) {
+  //       await Permission.notification.request();
+  //     }
+  //   }
+// Initialize notifications and permissions
   static Future<void> initialize({
     required String androidNotificationIcon,
   }) async {
+    log('🚀 Initializing YoutubeDownloaderPlus...');
+
+    // Request notification permission (Android 13+)
     if (Platform.isAndroid) {
+      log('📱 Requesting notification permission...');
       PermissionStatus notificationPermissionStatus =
           await Permission.notification.status;
+
+      log('Current permission status: $notificationPermissionStatus');
+
       if (!notificationPermissionStatus.isGranted) {
-        await Permission.notification.request();
+        log('Requesting permission...');
+        final result = await Permission.notification.request();
+        log('Permission result: $result');
       }
     }
 
-    AwesomeNotifications().initialize(
+    // Initialize Awesome Notifications - ADD AWAIT HERE!
+    log('🔔 Initializing Awesome Notifications...');
+
+    final initialized = await AwesomeNotifications().initialize(
       androidNotificationIcon,
       [
         NotificationChannel(
@@ -49,6 +73,9 @@ class YoutubeDownloaderPlus {
           channelDescription: 'Basic notifications for the app.',
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
+          importance: NotificationImportance.High,
+          playSound: true,
+          enableVibration: true,
         ),
         NotificationChannel(
           channelKey: 'download_channel',
@@ -56,15 +83,76 @@ class YoutubeDownloaderPlus {
           channelDescription: 'Displays download progress notifications.',
           defaultColor: const Color(0xFF2196F3),
           ledColor: Colors.white,
-          importance:
-              NotificationImportance.Low, // Lower importance to avoid floating
-          enableVibration: false, // Disable vibration
-          playSound: false, // Disable sound
-          onlyAlertOnce: true, // Prevent multiple alerts for updates
+          importance: NotificationImportance.Default, // Changed from Low
+          enableVibration: false,
+          playSound: false,
+          onlyAlertOnce: true,
+          defaultPrivacy: NotificationPrivacy.Public,
+          channelShowBadge: true,
         ),
       ],
+      debug: true, // Enable debug mode to see logs
     );
+
+    log('Initialization result: $initialized');
+
+    // Double-check permission with AwesomeNotifications
+    final isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    log('📋 Notification permission allowed: $isAllowed');
+
+    if (!isAllowed) {
+      log('⚠️ Requesting permission via AwesomeNotifications...');
+      final requested =
+          await AwesomeNotifications().requestPermissionToSendNotifications();
+      log('Permission request result: $requested');
+    }
+
+    // Send a test notification to verify
+    if (isAllowed || await AwesomeNotifications().isNotificationAllowed()) {
+      log('✅ Sending test notification...');
+      try {
+        await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 1,
+            channelKey: 'basic_channel',
+            title: '✅ Notifications Ready',
+            body: 'YoutubeDownloaderPlus is ready to use!',
+            notificationLayout: NotificationLayout.Default,
+          ),
+        );
+        log('✅ Test notification sent successfully!');
+      } catch (e) {
+        log('❌ Failed to send test notification: $e');
+      }
+    } else {
+      log('❌ Notification permission not granted!');
+    }
   }
+  //   AwesomeNotifications().initialize(
+  //     androidNotificationIcon,
+  //     [
+  //       NotificationChannel(
+  //         channelKey: 'basic_channel',
+  //         channelName: 'Basic Notifications',
+  //         channelDescription: 'Basic notifications for the app.',
+  //         defaultColor: const Color(0xFF9D50DD),
+  //         ledColor: Colors.white,
+  //       ),
+  //       NotificationChannel(
+  //         channelKey: 'download_channel',
+  //         channelName: 'Download Progress',
+  //         channelDescription: 'Displays download progress notifications.',
+  //         defaultColor: const Color(0xFF2196F3),
+  //         ledColor: Colors.white,
+  //         importance:
+  //             NotificationImportance.Low, // Lower importance to avoid floating
+  //         enableVibration: false, // Disable vibration
+  //         playSound: false, // Disable sound
+  //         onlyAlertOnce: true, // Prevent multiple alerts for updates
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // Download YouTube video
   Future<void> downloadYoutubeVideo({
