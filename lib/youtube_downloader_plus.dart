@@ -110,20 +110,20 @@ class YoutubeDownloaderPlus {
     // Send a test notification to verify
     if (isAllowed || await AwesomeNotifications().isNotificationAllowed()) {
       log('✅ Sending test notification...');
-      try {
-        await AwesomeNotifications().createNotification(
-          content: NotificationContent(
-            id: 1,
-            channelKey: 'basic_channel',
-            title: '✅ Notifications Ready',
-            body: 'YoutubeDownloaderPlus is ready to use!',
-            notificationLayout: NotificationLayout.Default,
-          ),
-        );
-        log('✅ Test notification sent successfully!');
-      } catch (e) {
-        log('❌ Failed to send test notification: $e');
-      }
+      // try {
+      //   await AwesomeNotifications().createNotification(
+      //     content: NotificationContent(
+      //       id: 1,
+      //       channelKey: 'basic_channel',
+      //       title: '✅ Notifications Ready',
+      //       body: 'YoutubeDownloaderPlus is ready to use!',
+      //       notificationLayout: NotificationLayout.Default,
+      //     ),
+      //   );
+      //   log('✅ Test notification sent successfully!');
+      // } catch (e) {
+      //   log('❌ Failed to send test notification: $e');
+      // }
     } else {
       log('❌ Notification permission not granted!');
     }
