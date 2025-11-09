@@ -1,6 +1,6 @@
 name: youtube_downloader_plus
 description: "A modified Flutter package based on youtube_downloader_totalxsoftware, developed by TotalXSoftware, with Arabic localization, customizable quality options, and progress notifications."
-version: 3
+version: 1.0.3
 homepage: "https://github.com/shaaa4t/youtube_downloader_plus"
 
 environment:
